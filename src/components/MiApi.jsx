@@ -15,11 +15,17 @@ function MiApi() {
     }
 
     const getRickAndMorty = async () => {
-        const res = await fetch("https://rickandmortyapi.com/api/character/1,2,3,4,5,11,712,47");
-        const data = await res.json();
-        const jsonOrden = data.sort((a, b) => a.name.localeCompare(b.name));
-        setCharacterNombre(jsonOrden);
+        try {
+            const res = await fetch("https://rickandmortyapi.com/api/character/1,2,3,4,5,11,712,47");
+            const data = await res.json();
+            const jsonOrden = data.sort((a, b) => a.name.localeCompare(b.name));
+            setCharacterNombre(jsonOrden);
+        } catch (error) {
+            alert("Error en cargar, intente en otro momento ");
+           // alert("Error en cargar " + error.message);
+        }
     }
+    
 
     useEffect(() => {
         getRickAndMorty();
@@ -33,10 +39,10 @@ function MiApi() {
                 <div className="card-container">
                     <Row>
                         {characterNombre.filter(filtrado).map((c, index) => (
-                            <Col key={index} xs={12} sm={6} md={3} >
-                                <Card style={{ marginBottom: '20px' }}>
+                            <Col className='mb-4' key={index} xs={12} sm={6} md={3} >
+                                <Card  className="h-100"style={{ marginBottom: '20px' }}>
                                     <Card.Img variant="top" src={c.image} alt={c.name} />
-                                    <Card.Body>
+                                    <Card.Body className='pb-1'>
                                         <Card.Title>{c.name}</Card.Title>
                                         <Card.Text>
                                             {c.status} - {c.species}
